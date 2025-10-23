@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城科滑板社</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: '微软雅黑', sans-serif; }
+        body { background: #f5f5f5; color: #333; }
+        /* 导航栏 */
+        .nav { background: rgba(0,0,0,0.8); position: fixed; top: 0; width: 100%; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
+        .logo { color: #fff; font-size: 24px; font-weight: bold; }
+        .nav-list { display: flex; list-style: none; }
+        .nav-list li { margin-left: 30px; }
+        .nav-list a { color: #fff; text-decoration: none; font-size: 16px; transition: color 0.3s; }
+        .nav-list a:hover { color: #00ccff; }
+        /* 英雄区 */
+        .hero { height: 100vh; background: url(https://picsum.photos/id/1041/1920/1080) center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+        .hero h1 { font-size: 60px; margin-bottom: 20px; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 22px; margin-bottom: 30px; text-shadow: 0 0 8px rgba(0,0,0,0.5); }
+        .btn { background: #00ccff; color: #fff; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-size: 18px; transition: background 0.3s; }
+        .btn:hover { background: #0099cc; }
+        /* 通用模块样式 */
+        .section { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
+        .section-title { text-align: center; font-size: 36px; margin-bottom: 60px; color: #333; position: relative; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: #00ccff; margin: 15px auto; }
+        /* 社团简介 */
+        .intro { display: flex; gap: 50px; align-items: center; flex-wrap: wrap; }
+        .intro-img { flex: 1; min-width: 300px; }
+        .intro-img img { width: 100%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .intro-text { flex: 1; min-width: 300px; }
+        .intro-text h3 { font-size: 24px; margin-bottom: 20px; color: #444; }
+        .intro-text p { font-size: 16px; line-height: 1.8; margin-bottom: 15px; color: #666; }
+        /* 活动展示 */
+        .activity-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .activity-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 0 15px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .activity-card:hover { transform: translateY(-5px); }
+        .activity-img { height: 200px; overflow: hidden; }
+        .activity-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .activity-card:hover .activity-img img { transform: scale(1.05); }
+        .activity-info { padding: 20px; }
+        .activity-info h4 { font-size: 18px; margin-bottom: 10px; }
+        .activity-info p { font-size: 14px; color: #666; line-height: 1.6; }
+        /* 成员风采 */
+        .member-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 30px; }
+        .member-card { text-align: center; }
+        .member-avatar { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 15px; border: 5px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .member-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .member-name { font-size: 18px; margin-bottom: 5px; }
+        .member-role { font-size: 14px; color: #666; }
+        /* 报名入口 */
+        .join { background: #00ccff; padding: 80px 0; color: #fff; margin: 80px 0 0; }
+        .join-container { max-width: 800px; margin: 0 auto; text-align: center; padding: 0 20px; }
+        .join h2 { font-size: 36px; margin-bottom: 30px; }
+        .join-form { display: flex; flex-direction: column; gap: 20px; max-width: 500px; margin: 0 auto; }
+        .form-input { padding: 15px; border: none; border-radius: 5px; font-size: 16px; outline: none; }
+        .form-btn { background: #fff; color: #00ccff; border: none; padding: 15px; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .form-btn:hover { background: #f0f0f0; }
+        /* 页脚 */
+        .footer { background: #333; color: #fff; padding: 50px 0 20px; }
+        .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; }
+        .footer-info h3 { font-size: 22px; margin-bottom: 20px; }
+        .footer-info p { font-size: 14px; line-height: 1.8; color: #ccc; margin-bottom: 15px; }
+        .footer-contact h4, .footer-links h4 { font-size: 18px; margin-bottom: 15px; }
+        .footer-contact p { font-size: 14px; color: #ccc; margin-bottom: 8px; }
+        .footer-links ul { list-style: none; }
+        .footer-links a { color: #ccc; text-decoration: none; font-size: 14px; line-height: 1.8; transition: color 0.3s; }
+        .footer-links a:hover { color: #00ccff; }
+        .copyright { text-align: center; padding-top: 30px; margin-top: 30px; border-top: 1px solid #444; font-size: 12px; color: #aaa; }
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .hero p { font-size: 18px; }
+            .nav-list { display: none; }
+            .section-title { font-size: 28px; }
+            .intro { gap: 30px; }
+            .join h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">滑板社</div>
+            <ul class="nav-list">
+                <li><a href=" ">社团简介</a ></li>
+                <li><a href="#activity">活动展示</a ></li>
+                <li><a href="#member">成员风采</a ></li>
+                <li><a href="#join">加入我们</a ></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>城科滑板社</h1>
+            <p>用滑板成就热爱，用热爱追逐星光</p >
+            <a href="#join" class="btn">立即加入</a >
+        </div>
+    </div>
+
+    <!-- 社团简介 -->
+    <section id="intro" class="section">
+        <h2 class="section-title">社团简介</h2>
+        <div class="intro">
+            <div class="intro-img">
+                < img src="https://picsum.photos/id/1039/600/400" alt="社团活动">
+            </div>
+            <div class="intro-text">
+                <h3>关于我们</h3>
+                <p>滑板社成立于2023年8月，是校内首个滑板兴趣社团 是现有成员120+人。</p >
+                <p>我们定期组织校内外滑板、滑板技巧培训、故事八卦分享会，旨在让更多人发现滑板之美，掌握滑板技能。</p >
+                <a href="#activity" class="btn" style="display: inline-block; margin-top: 20px;">查看活动</a >
+            </div>
+        </div>
+    </section>
+
+    <!-- 活动展示 -->
+    <section id="activity" class="section">
+        <h2 class="section-title">活动展示</h2>
+        <div class="activity-list">
+            <div class="activity-card">
+                <div class="activity-img">
+                    < img src="https://picsum.photos/id/1050/600/400" alt="烟台山爽滑">
+                </div>
+                <div class="activity-info">
+                    <h4>烟台山爽滑</h4>
+                    <p>组织成员前往烟台山参观及滑板</p >
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="activity-img">
+                    < img src="https://picsum.photos/id/1059/600/400" alt="海滑">
+                </div>
+                <div class="activity-info">
+                    <h4>海滑</h4>
+                    <p>旨在海边进行刷街滑板 感受海风与滑板带来的多巴胺</p >
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="activity-img">
+                    < img src="https://picsum.photos/id/1069/600/400" alt="作品展览">
+                </div>
+                <div class="activity-info">
+                    <h4>趣味滑板</h4>
+                    <p>在学校举行趣味滑板比赛</p >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 成员风采 -->
+    <section id="member" class="section">
+        <h2 class="section-title">成员风采</h2>
+        <div class="member-list">
+            <div class="member-card">
+                <div class="member-avatar">
+                    < img src="https://picsum.photos/id/1027/200/200" alt="社长">
+                </div>
+                <div class="member-name">冯慧诗</div>
+                <div class="member-role">社长 · 跟翻大王</div>
+            </div>
+            <div class="member-card">
+                <div class="member-avatar">
+                    < img src="https://picsum.photos/id/1012/200/200" alt="副部长">
+                </div>
+                <div class="member-name">朱永谦</div>
+                <div class="member-role">副部长 · 坚持与努力</div>
+            </div>
+            <div class="member-card">
+                <div class="member-avatar">
+                    < img src="https://picsum.photos/id/1014/200/200" alt="副部长">
+                </div>
+                <div class="member-name">马雨童</div>
+                <div class="member-role">副部长 · 吉祥物</div>
+            </div>
+            <div class="member-card">
+                <div class="member-avatar">
+                    < img src="https://picsum.photos/id/1005/200/200" alt="新人代表">
+                </div>
+                <div class="member-name">李孟</div>
+                <div class="member-role">新人代表 · 潜力滑手</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 报名入口 -->
+    <section id="join" class="join">
+        <div class="join-container">
+            <h2>加入我们，一起追风</h2>
+            <p style="margin-bottom: 30px; font-size: 16px;">无论你是滑板小白，还是有经验的爱好者，只要热爱滑板，这里就是你的舞台！</p >
+            <form class="join-form">
+                <input type="text" class="form-input" placeholder="你的姓名" required>
+                <input type="text" class="form-input" placeholder="你的学号/年级" required>
+                <input type="tel" class="form-input" placeholder="联系电话" required>
+                <input type="text" class="form-input" placeholder="你对滑板社的期待（选填）">
+                <button type="submit" class="form-btn">提交报名</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info" style="flex: 1; min-width: 300px;">
+                <h3>城科滑板社</h3>
+                <p>地址：待定</p >
+                <p>邮箱：3326421854@qq。com</p >
+                <p>QQ群：无</p >
+            </div>
+            <div class="footer-contact" style="flex: 1; min-width: 200px;">
+                <h4>联系我们</h4>
+                <p>社长微信：sk8-fffffhs</p >
+                <p>活动咨询：17515053810</p >
+                <p>招新时间：每天8:00-20:00</p >
+            </div>
+            <div class="footer-links" style="flex: 1; min-width: 200px;">
+                <h4>快速链接</h4>
+                <ul>
+                    <li><a href="#intro">社团简介</a ></li>
+                    <li><a href="#activity">活动回顾</a ></li>
+                    <li><a href="#member">成员作品</a ></li>
+                    <li><a href="#join">招新报名</a ></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">© 2025 城科滑板社 版权所有</div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href
